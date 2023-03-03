@@ -1,24 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Exchange Rate Converter</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Exchange Rates</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			text-align: center;
+		}
+		h1 {
+			font-size: 24px;
+			margin-top: 30px;
+		}
+		table {
+			margin: auto;
+			margin-top: 20px;
+			border-collapse: collapse;
+			border: 2px solid black;
+			width: 300px;
+		}
+		th, td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		th {
+			background-color: #eee;
+		}
+	</style>
 </head>
 <body>
-	<header>
-		<h1>Exchange Rate Converter</h1>
-	</header>
-	<main>
-		<div class="converter">
-			<h2>Convert USD to TRY</h2>
-			<input type="number" id="usd-input" placeholder="Enter USD amount">
-			<button id="convert-btn">Convert</button>
-			<div id="result"></div>
-		</div>
-	</main>
-	<footer>
-		<p>&copy; 2023 All rights reserved.</p>
-	</footer>
-	<script src="script.js"></script>
+	<h1>Exchange Rates</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>Currency</th>
+				<th>Rate</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>USD to TRY</td>
+				<td id="usd-try-rate"></td>
+			</tr>
+			<tr>
+				<td>EUR to TRY</td>
+				<td id="eur-try-rate"></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		// Fetch USD to TRY exchange rate
+		fetch('https://finance.google.com/finance/converter?a=1&from=USD&to=TRY')
+			.then(response => response.text())
+			.then(data => {
+				const rate = data.match(/<span class=bld>(.*?)<\/span>/)[1];
+				document.getElementById('usd-try-rate').innerText = rate;
+			});
+
+		// Fetch EUR to TRY exchange rate
+		fetch('https://finance.google.com/finance/converter?a=1&from=EUR&to=TRY')
+			.then(response => response.text())
+			.then(data => {
+				const rate = data.match(/<span class=bld>(.*?)<\/span>/)[1];
+				document.getElementById('eur-try-rate').innerText = rate;
+			});
+	</script>
 </body>
 </html>
