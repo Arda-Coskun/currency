@@ -23,3 +23,24 @@ exchangeBtn.addEventListener("click", async () => {
     resultDiv.innerHTML = "An error occurred while fetching exchange rate data.";
   }
 });
+
+
+
+
+const usdTryRateElement = document.getElementById("usd-try-rate");
+
+function getUsdTryRate() {
+  fetch("https://finance.yahoo.com/quote/USDTRY=X/")
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const rate = doc.querySelector(".Trsdu(0.3s) > span").textContent;
+      usdTryRateElement.textContent = `USD/TRY: ${rate}`;
+    })
+    .catch(error => console.log(error));
+}
+
+getUsdTryRate();
+setInterval(getUsdTryRate, 60000); // update rate every minute
+
