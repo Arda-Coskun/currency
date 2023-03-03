@@ -27,22 +27,20 @@ exchangeBtn.addEventListener("click", async () => {
 
 
 
-function updateCurrencyValues() {
-  const url = "https://api.exchangerate-api.com/v4/latest/TRY";
-  fetch(url)
+const usdTryRate = document.getElementById("usd-try-rate");
+const eurTryRate = document.getElementById("eur-try-rate");
+const gbpTryRate = document.getElementById("gbp-try-rate");
+
+function getExchangeRates() {
+  fetch("https://api.exchangeratesapi.io/latest?base=TRY&symbols=USD,EUR,GBP")
     .then(response => response.json())
     .then(data => {
-      const usd = data.rates.USD.toFixed(2);
-      const eur = data.rates.EUR.toFixed(2);
-      const gbp = data.rates.GBP.toFixed(2);
-      const jpy = data.rates.JPY.toFixed(3);
-      
-      document.querySelector(".currency-panel:nth-child(1) .currency-value").textContent = usd;
-      document.querySelector(".currency-panel:nth-child(2) .currency-value").textContent = eur;
-      document.querySelector(".currency-panel:nth-child(3) .currency-value").textContent = gbp;
-      document.querySelector(".currency-panel:nth-child(4) .currency-value").textContent = jpy;
-    });
+      usdTryRate.innerHTML = data.rates.USD.toFixed(2);
+      eurTryRate.innerHTML = data.rates.EUR.toFixed(2);
+      gbpTryRate.innerHTML = data.rates.GBP.toFixed(2);
+    })
+    .catch(error => console.log(error));
 }
 
-updateCurrencyValues();
-setInterval(updateCurrencyValues, 5000); // Update every 5 seconds
+getExchangeRates();
+setInterval(getExchangeRates, 60000); // update every minute
