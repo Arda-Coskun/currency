@@ -57,43 +57,30 @@ button {
 
 
 
-.currency-live {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 20px;
-  overflow: hidden;
+.live-feed {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 20px auto;
+}
+
+.currency-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
-  width: 300px;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 100px;
+  height: 80px;
 }
 
-.currency-live h3 {
-  font-size: 1.2rem;
+.currency-name {
   font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.currency-live p {
-  font-size: 1rem;
-  margin-bottom: 5px;
+.currency-value {
+  font-size: 20px;
 }
-
-.currency-live .rate {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.currency-live .change {
-  font-size: 1rem;
-  margin-bottom: 5px;
-}
-
-.currency-live .up {
-  color: green;
-}
-
-.currency-live .down {
-  color: red;
-}
-
