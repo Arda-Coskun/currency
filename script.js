@@ -1,22 +1,23 @@
-
-var btc = document.getElementById("bitcoin");
-var ltc = document.getElementById("litecoin");
-var eth = document.getElementById("ethereum");
-var doge = document.getElementById("dogecoin");
-
-var liveprice = {
-    "async": true,
-    "scroosDomain": true,
-    "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Clitecoin%2Cethereum%2Cdogecoin&vs_currencies=usd",
-
-    "method": "GET",
-    "headers": {}
-}
-
-$.ajax(liveprice).done(function (response){
-    btc.innerHTML = response.bitcoin.usd;
-    ltc.innerHTML = response.litecoin.usd;
-    eth.innerHTML = response.ethereum.usd;
-    doge.innerHTML = response.dogecoin.usd;
-
-});
+const exchangeRates = {
+    "EUR": {
+      "GBP": 0.86,
+      "USD": 1.21,
+      "TRY": 10.42
+    },
+    "GBP": {
+      "EUR": 1.16,
+      "USD": 1.40,
+      "TRY": 12.08
+    },
+    "USD": {
+      "EUR": 0.83,
+      "GBP": 0.71,
+      "TRY": 8.65
+    },
+    "TRY": {
+      "EUR": 0.096,
+      "GBP": 0.083,
+      "USD": 0.12
+    }
+  };
+  
