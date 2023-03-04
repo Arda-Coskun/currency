@@ -1,118 +1,129 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  .card {
-    width: calc(33.33% - 20px);
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .card-header {
-    background-color: #2c3e50;
-    color: #fff;
-    font-size: 18px;
-    padding: 12px 20px;
-    text-align: center;
-  }
-  
-  .card-body {
-    padding: 20px;
-  }
-  
-  .exchange-form {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  
-  .exchange-input {
-    width: calc(50% - 10px);
-    margin-right: 10px;
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .exchange-button {
-    width: calc(50% - 10px);
-    background-color: #2c3e50;
-    color: #fff;
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .exchange-rate {
-    font-size: 24px;
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .live-feed {
-    width: calc(33.33% - 20px);
-    margin-bottom: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .live-feed-header {
-    background-color: #2c3e50;
-    color: #fff;
-    font-size: 18px;
-    padding: 12px 20px;
-    text-align: center;
-  }
-  
-  .live-feed-body {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .live-feed-item {
-    width: calc(50% - 10px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 16px;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .live-feed-item:last-child {
-    border-bottom: none;
-  }
-  
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.exchange-form {
+  flex-basis: calc(50% - 20px);
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.exchange-form h2 {
+  margin-top: 0;
+}
+
+.exchange-form form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 10px;
+}
+/* Currency Exchanger */
+.currency-exchanger {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.currency-exchanger label {
+  margin-right: 10px;
+}
+
+.currency-exchanger input[type="number"] {
+  width: 100px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.currency-exchanger select {
+  width: 100px;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.currency-exchanger button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.currency-exchanger button:hover {
+  background-color: #0069d9;
+}
+
+.currency-exchanger .result {
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Live Feed */
+.live-feed {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.live-feed h2 {
+  margin-top: 0;
+}
+
+.live-feed table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.live-feed td {
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.live-feed td:first-child {
+  font-weight: bold;
+}
+
+.live-feed td.rate-positive {
+  color: green;
+}
+
+.live-feed td.rate-negative {
+  color: red;
+}

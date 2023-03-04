@@ -1,71 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Currency Exchange</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+    <title>Currency Exchange</title>
+    <script type="text/javascript">
+        function convert(){
+            let amount = document.getElementById("amount").value;  // Get the input amount
+            let from = document.getElementById("from-currency").value; // Get selected from currency
+            let to = document.getElementById("to-currency").value; // Get selected to currency
+            // Define the exchange rates
+            const rates = {
+                "EUR": {"GBP": 0.8767, "USD": 1.1853, "TRY": 9.7115},
+                "GBP": {"EUR": 1.1413, "USD": 1.3595, "TRY": 11.1428},
+                "USD": {"EUR": 0.8439, "GBP": 0.7348, "TRY": 8.1645},
+                "TRY": {"EUR": 0.1029, "GBP": 0.0897, "USD": 0.1224}
+            };
+            // Convert the amount
+            let result = amount * rates[from][to];
+            // Display the result
+            document.getElementById("result").innerHTML = result.toFixed(2) + " " + to;
+            // Show the live data feed of selected currency to TRY
+            let rateTRY = (1 / rates[to]["TRY"]); // Calculate the exchange rate for chosen currency to TRY
+            let url = "https://api.exchangerate-api.com/v4/latest/" + to; // API URL for fetching the exchange rate data
+            fetch(url)
+            .then(response => response.json()) // Parse the JSON response
+            .then(data => {
+                document.getElementById("rateTRY").innerHTML = "1 " + to + " = " + (data.rates["TRY"] * rateTRY).toFixed(4) + " TRY";
+            })
+            .catch(error => console.log(error));
+        }
+    </script>
 </head>
 <body>
-	<div class="container">
-		<div class="sidebar">
-			<div class="logo">
-				<h1>Currency Exchange</h1>
-			</div>
-			<div class="menu">
-				<ul>
-					<li><a href="#">EUR/GBP</a></li>
-					<li><a href="#">EUR/USD</a></li>
-					<li><a href="#">EUR/TRY</a></li>
-					<li><a href="#">GBP/USD</a></li>
-					<li><a href="#">GBP/TRY</a></li>
-					<li><a href="#">USD/TRY</a></li>
-				</ul>
-			</div>
-		</div>
-		<div class="main">
-			<div class="converter">
-				<h2>Exchange Rates</h2>
-				<div class="input-group">
-					<label for="from">From</label>
-					<select id="from">
-						<option value="EUR">EUR</option>
-						<option value="GBP">GBP</option>
-						<option value="USD">USD</option>
-						<option value="TRY">TRY</option>
-					</select>
-				</div>
-				<div class="input-group">
-					<label for="to">To</label>
-					<select id="to">
-						<option value="EUR">EUR</option>
-						<option value="GBP">GBP</option>
-						<option value="USD">USD</option>
-						<option value="TRY">TRY</option>
-					</select>
-				</div>
-				<div class="input-group">
-					<label for="amount">Amount</label>
-					<input type="text" id="amount" placeholder="Enter amount">
-				</div>
-				<button id="convert-btn">Convert</button>
-				<div id="result"></div>
-			</div>
-			<div class="live-feed">
-				<h2>Live Exchange Rates</h2>
-				<div class="box">
-					<h3>EUR/TRY</h3>
-					<div id="eur-try"></div>
-				</div>
-				<div class="box">
-					<h3>GBP/TRY</h3>
-					<div id="gbp-try"></div>
-				</div>
-				<div class="box">
-					<h3>USD/TRY</h3>
-					<div id="usd-try"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="script.js"></script>
+    <h1>Currency Exchange Rates:</h1>
+    <form>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" value="1">
+        <br><br>
+        <label for="from-currency">From:</label>
+        <select id="from-currency" name="from">
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">British Pound Sterling (GBP)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="TRY">Turkish Lira (TRY)</option>
+        </select>
+        <br><br>
+        <label for="to-currency">To:</label>
+        <select id="to-currency" name="to">
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">British Pound Sterling (GBP)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="TRY">Turkish Lira (TRY)</option>
+        </select>
+        <br><br>
+        <input type="button" value="Convert" onclick="convert()">
+    </form>
+    <br>
+    <div id="result"></div>
+    <div id="rateTRY"></div> 
 </body>
 </html>
