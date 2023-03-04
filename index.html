@@ -1,54 +1,158 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Currency Exchanger</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <header>
-      <h1>Currency Exchanger</h1>
-    </header>
-    <main>
-      <div class="currency-form">
-        <h2>Exchange Rates</h2>
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" />
-        <label for="from">From:</label>
-        <select id="from">
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-        </select>
-        <label for="to">To:</label>
-        <select id="to">
-          <option value="TRY">TRY</option>
-        </select>
-        <button id="exchange-btn">Exchange</button>
-        <div class="result" id="result"></div>
-      </div>
-      
-      
-      
-      
-      <div id="live-feed">
-  <div class="currency-box">
-    <h3>USD/TRY</h3>
-    <p id="usd-try-rate"></p>
-  </div>
-  <div class="currency-box">
-    <h3>EUR/TRY</h3>
-    <p id="eur-try-rate"></p>
-  </div>
-  <div class="currency-box">
-    <h3>GBP/TRY</h3>
-    <p id="gbp-try-rate"></p>
-  </div>
-</div>
+<html>
+<head>
+	<title>Currency Exchange</title>
+	<style>
+		/* Style for the currency exchange section */
+		.currency-exchange {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			margin: 50px auto;
+			max-width: 1000px;
+		}
 
+		.currency-exchange label, .currency-exchange input[type="number"], .currency-exchange select {
+			margin: 10px;
+			font-size: 20px;
+			padding: 5px;
+			border: 1px solid black;
+			border-radius: 5px;
+		}
 
-    </main>
-    <script src="script.js"></script>
-  </body>
+		.currency-exchange input[type="submit"] {
+			padding: 5px 20px;
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 20px;
+			margin-top: 10px;
+		}
+
+		/* Style for the live currency data section */
+		.live-currency-data {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: center;
+			margin: 50px auto;
+			max-width: 1000px;
+		}
+
+		.live-currency-data div {
+			margin: 10px;
+			font-size: 20px;
+			padding: 5px;
+			border: 1px solid black;
+			border-radius: 5px;
+			min-width: 200px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		}
+
+		.live-currency-data div span {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Currency Exchange</h1>
+
+	<!-- Currency exchange section -->
+	<div class="currency-exchange">
+		<label>Amount:</label>
+		<input type="number" id="amount" value="1" min="1">
+		<label>From:</label>
+		<select id="from">
+			<option value="EUR">EUR</option>
+			<option value="GBP">GBP</option>
+			<option value="USD">USD</option>
+			<option value="TRY">TRY</option>
+		</select>
+		<label>To:</label>
+		<select id="to">
+			<option value="EUR">EUR</option>
+			<option value="GBP">GBP</option>
+			<option value="USD">USD</option>
+			<option value="TRY">TRY</option>
+		</select>
+		<input type="submit" value="Convert" onclick="convertCurrency()">
+	</div>
+
+	<!-- Live currency data section -->
+	<div class="live-currency-data">
+		<div id="eur">
+			<span>EUR to TRY:</span>
+			<span id="eur-try"></span>
+		</div>
+		<div id="gbp">
+			<span>GBP to TRY:</span>
+			<span id="gbp-try"></span>
+		</div>
+		<div id="usd">
+			<span>USD to TRY:</span>
+			<span id="usd-try"></span>
+		</div>
+	</div>
+
+	<script>
+		// Function to convert
+const currencies = ["EUR", "GBP", "USD", "TRY"];
+const baseCurrency = "TRY";
+let rates = {};
+
+const fetchRates = () => {
+  fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`)
+    .then((response) => response.json())
+    .then((data) => {
+      rates = data.rates;
+      updateExchangeRates();
+    })
+    .catch((error) => console.log(error));
+};
+
+const updateExchangeRates = () => {
+  currencies.forEach((currency) => {
+    const rate = rates[currency];
+    const rateElement = document.getElementById(`rate-${currency}`);
+    rateElement.innerText = rate.toFixed(4);
+  });
+
+  const fromCurrency = document.getElementById("from-currency").value;
+  const toCurrency = document.getElementById("to-currency").value;
+  const amount = parseFloat(document.getElementById("amount").value);
+
+  const fromRate = rates[fromCurrency];
+  const toRate = rates[toCurrency];
+
+  const convertedAmount = (amount * toRate) / fromRate;
+  document.getElementById("converted-amount").value = convertedAmount.toFixed(2);
+};
+
+const init = () => {
+  fetchRates();
+  setInterval(fetchRates, 5000);
+
+  const currencySelectors = document.querySelectorAll(".currency-select");
+  currencySelectors.forEach((selector) => {
+    selector.addEventListener("change", () => {
+      updateExchangeRates();
+    });
+  });
+
+  const amountInput = document.getElementById("amount");
+  amountInput.addEventListener("input", () => {
+    updateExchangeRates();
+  });
+};
+
+init();
+</script>
+ </body>
 </html>
