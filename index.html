@@ -1,158 +1,49 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Currency Exchange</title>
-	<style>
-		/* Style for the currency exchange section */
-		.currency-exchange {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			margin: 50px auto;
-			max-width: 1000px;
-		}
-
-		.currency-exchange label, .currency-exchange input[type="number"], .currency-exchange select {
-			margin: 10px;
-			font-size: 20px;
-			padding: 5px;
-			border: 1px solid black;
-			border-radius: 5px;
-		}
-
-		.currency-exchange input[type="submit"] {
-			padding: 5px 20px;
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-			font-size: 20px;
-			margin-top: 10px;
-		}
-
-		/* Style for the live currency data section */
-		.live-currency-data {
-			display: flex;
-			flex-wrap: wrap;
-			align-items: center;
-			justify-content: center;
-			margin: 50px auto;
-			max-width: 1000px;
-		}
-
-		.live-currency-data div {
-			margin: 10px;
-			font-size: 20px;
-			padding: 5px;
-			border: 1px solid black;
-			border-radius: 5px;
-			min-width: 200px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			flex-wrap: wrap;
-		}
-
-		.live-currency-data div span {
-			font-weight: bold;
-			margin-right: 10px;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>live Coin Price</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<h1>Currency Exchange</h1>
 
-	<!-- Currency exchange section -->
-	<div class="currency-exchange">
-		<label>Amount:</label>
-		<input type="number" id="amount" value="1" min="1">
-		<label>From:</label>
-		<select id="from">
-			<option value="EUR">EUR</option>
-			<option value="GBP">GBP</option>
-			<option value="USD">USD</option>
-			<option value="TRY">TRY</option>
-		</select>
-		<label>To:</label>
-		<select id="to">
-			<option value="EUR">EUR</option>
-			<option value="GBP">GBP</option>
-			<option value="USD">USD</option>
-			<option value="TRY">TRY</option>
-		</select>
-		<input type="submit" value="Convert" onclick="convertCurrency()">
-	</div>
+    <div class="container">
+        <div class="coin-price">
+            <div class="logo"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEi32rDKQR2Swi7YfHjDzyZUBGEmxTz77OClnm24SZl7kWuls7fsVCIfAObY_JRJIReQnBWZIPSVfDLSqDvqeu4CCXCoNQIoUGK-OSDUGMtDJFxh9vmU6WGajIgXH4CsR_-sXU0qWbyJTJl7N0BSTB8HcAGSpCJ54G1daZPnU6h2oANo2CTGsbHCoaGJHQ" ></div>
+            <div>
+                <h1>$<span id="bitcoin"></span></h1>
+                <h1>Bitcoin</h1>
+            </div>
+        </div>
+        <div class="coin-price">
+            <div class="logo"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEhrUFoHC68rLHQYMV41awqGtoeU6qI-CkSVmcYK-KBCrOvL-jzwLOx8pN-5B8aALsHh1Zc9mmDm8LVQSSpdpsw0v6vrJsv4r9_lv0ic5aYbogc3i3h9mG6ZGMc7g9_cGSRh_soaKmXtpMEOxBFIsmiTa_wticu9T07MbqQ42J9NwowHp8tn8OUIBlhjqA" ></div>
+            <div>
+                <h1>$<span id="litecoin"></span></h1>
+                <h1>Litecoin</h1>
+            </div>
+        </div>
+       
+        <div class="coin-price">
+            <div class="logo"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEgfcodOJm7ZIXw2kiqdo5abN4cUvFYgyqpKt91zHI8710ltPK5Ny_S5X93w9LSDsF5jW61frn3C8a_8w2GXu4bf0clzxuJljoQ8n6az5EI5zQOcl5W2LScP-1-41NQwPW5A3JWT9EwejtOnHsd3q2-llUsJJQ3Z74v_2FOPn0TrI2529NS9_hmFbvModw" ></div>
+            <div>
+                <h1>$<span id="ethereum"></span></h1>
+                <h1>Ethereum</h1>
+            </div>
+        </div>
+        <div class="coin-price">
+            <div class="logo"><img src="https://blogger.googleusercontent.com/img/a/AVvXsEj9YzGIFUSMpRoWE4IjGl_o2zpdPkvtUS6jzIgZWEWl7ztYyV20oXu80A52v0R_nXpt_qXVBzxnfse2_pfeIbVHwQSR3oLqqAyMqVqnzJpdbSCBHA2b_zlheiLY3Bb0PYCEXQny7q-FnGE01ZtxVFVC8DbLWW-ZC1PC-gaqL7IC7ZfRxFOZufcv8lcY1g" ></div>
+            <div>
+                <h1>$<span id="dogecoin"></span></h1>
+                <h1>Dogecoin</h1>
+            </div>
+        </div>
 
-	<!-- Live currency data section -->
-	<div class="live-currency-data">
-		<div id="eur">
-			<span>EUR to TRY:</span>
-			<span id="eur-try"></span>
-		</div>
-		<div id="gbp">
-			<span>GBP to TRY:</span>
-			<span id="gbp-try"></span>
-		</div>
-		<div id="usd">
-			<span>USD to TRY:</span>
-			<span id="usd-try"></span>
-		</div>
-	</div>
-
-	<script>
-		// Function to convert
-const currencies = ["EUR", "GBP", "USD", "TRY"];
-const baseCurrency = "TRY";
-let rates = {};
-
-const fetchRates = () => {
-  fetch(`https://api.exchangerate-api.com/v4/latest/${baseCurrency}`)
-    .then((response) => response.json())
-    .then((data) => {
-      rates = data.rates;
-      updateExchangeRates();
-    })
-    .catch((error) => console.log(error));
-};
-
-const updateExchangeRates = () => {
-  currencies.forEach((currency) => {
-    const rate = rates[currency];
-    const rateElement = document.getElementById(`rate-${currency}`);
-    rateElement.innerText = rate.toFixed(4);
-  });
-
-  const fromCurrency = document.getElementById("from-currency").value;
-  const toCurrency = document.getElementById("to-currency").value;
-  const amount = parseFloat(document.getElementById("amount").value);
-
-  const fromRate = rates[fromCurrency];
-  const toRate = rates[toCurrency];
-
-  const convertedAmount = (amount * toRate) / fromRate;
-  document.getElementById("converted-amount").value = convertedAmount.toFixed(2);
-};
-
-const init = () => {
-  fetchRates();
-  setInterval(fetchRates, 5000);
-
-  const currencySelectors = document.querySelectorAll(".currency-select");
-  currencySelectors.forEach((selector) => {
-    selector.addEventListener("change", () => {
-      updateExchangeRates();
-    });
-  });
-
-  const amountInput = document.getElementById("amount");
-  amountInput.addEventListener("input", () => {
-    updateExchangeRates();
-  });
-};
-
-init();
-</script>
- </body>
+    </div>
+   
+    <script src="ap.js"></script>
+</body>
 </html>
