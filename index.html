@@ -1,61 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Currency Exchange</title>
-    <script type="text/javascript">
-        function convert(){
-            let amount = document.getElementById("amount").value;  // Get the input amount
-            let from = document.getElementById("from-currency").value; // Get selected from currency
-            let to = document.getElementById("to-currency").value; // Get selected to currency
-            // Define the exchange rates
-            const rates = {
-                "EUR": {"GBP": 0.8767, "USD": 1.1853, "TRY": 9.7115},
-                "GBP": {"EUR": 1.1413, "USD": 1.3595, "TRY": 11.1428},
-                "USD": {"EUR": 0.8439, "GBP": 0.7348, "TRY": 8.1645},
-                "TRY": {"EUR": 0.1029, "GBP": 0.0897, "USD": 0.1224}
-            };
-            // Convert the amount
-            let result = amount * rates[from][to];
-            // Display the result
-            document.getElementById("result").innerHTML = result.toFixed(2) + " " + to;
-            // Show the live data feed of selected currency to TRY
-            let rateTRY = (1 / rates[to]["TRY"]); // Calculate the exchange rate for chosen currency to TRY
-            let url = "https://api.exchangerate-api.com/v4/latest/" + to; // API URL for fetching the exchange rate data
-            fetch(url)
-            .then(response => response.json()) // Parse the JSON response
-            .then(data => {
-                document.getElementById("rateTRY").innerHTML = "1 " + to + " = " + (data.rates["TRY"] * rateTRY).toFixed(4) + " TRY";
-            })
-            .catch(error => console.log(error));
-        }
-    </script>
-</head>
-<body>
-    <h1>Currency Exchange Rates:</h1>
+  <head>
+    <title>Çevirici</title>
+  </head>
+  <body>
+    <h1>Çevirici</h1>
     <form>
-        <label for="amount">Amount:</label>
-        <input type="text" id="amount" name="amount" value="1">
-        <br><br>
-        <label for="from-currency">From:</label>
-        <select id="from-currency" name="from">
-            <option value="EUR">Euro (EUR)</option>
-            <option value="GBP">British Pound Sterling (GBP)</option>
-            <option value="USD">US Dollar (USD)</option>
-            <option value="TRY">Turkish Lira (TRY)</option>
-        </select>
-        <br><br>
-        <label for="to-currency">To:</label>
-        <select id="to-currency" name="to">
-            <option value="EUR">Euro (EUR)</option>
-            <option value="GBP">British Pound Sterling (GBP)</option>
-            <option value="USD">US Dollar (USD)</option>
-            <option value="TRY">Turkish Lira (TRY)</option>
-        </select>
-        <br><br>
-        <input type="button" value="Convert" onclick="convert()">
+      <label for="amount">Enter Amount:</label>
+      <input type="number" id="amount" name="amount" min="0" step="0.01" required>
+      <br><br>
+      
+      <label for="from">From:</label>
+      <select id="from" name="from">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="TRY">TRY</option>
+      </select>
+      
+      <label for="to">To:</label>
+      <select id="to" name="to">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="TRY">TRY</option>
+      </select>
+      <br><br>
+      
+      <button type="button" onclick="convert()">Convert</button>
+      <br><br>
+      
+      <label for="result">Result:</label>
+      <input type="number" id="result" name="result" readonly>
     </form>
-    <br>
-    <div id="result"></div>
-    <div id="rateTRY"></div> 
-</body>
+    
+    <script>
+      function convert() {
+        const amount = document.getElementById("amount").value;
+        const from = document.getElementById("from").value;
+        const to = document.getElementById("to").value;
+        let result;
+        
+        if (from === "USD" && to === "TRY") {
+          result = amount * 9.30;
+        } else if (from === "EUR" && to === "TRY") {
+          result = amount * 10.90;
+        } else if (from === "GBP" && to === "TRY") {
+          result = amount * 12.80;
+        } else if (from === "TRY" && to === "USD") {
+          result = amount / 9.30;
+        } else if (from === "TRY" && to === "EUR") {
+          result = amount / 10.90;
+        } else if (from === "TRY" && to === "GBP") {
+          result = amount / 12.80;
+        } else if (from === to) {
+          result = amount;
+        }
+        
+        document.getElementById("result").value = result.toFixed(2);
+      }
+    </script>
+  </body>
 </html>
